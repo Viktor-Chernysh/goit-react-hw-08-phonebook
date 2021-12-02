@@ -2,11 +2,14 @@ import { useSelector } from 'react-redux';
 import ClockLoader from 'react-spinners/ClockLoader';
 import { css } from '@emotion/react';
 
-import Filter from '../Filter/Filter';
-import ContactItem from './contactItem';
-import s from './Contacts.module.css';
-import { useGetContactsQuery } from '../../redux/contacts/contactsSlice';
-import { getFilter } from '../../redux/contacts/contacts-selectors';
+import Filter from 'components/Filter/Filter';
+import ContactItem from 'components/Contacts/contactItem';
+import s from 'components/Contacts/Contacts.module.css';
+// import { useGetContactsQuery } from '../../redux/contacts/contactsSlice';
+import { contactsSelectors } from 'redux/contacts';
+import { contactsSlice } from 'redux/contacts';
+import Section from 'components/Section/Section';
+// import { getFilter } from '../../redux/contacts/contacts-selectors';
 
 const override = css`
   display: block;
@@ -15,8 +18,9 @@ const override = css`
 `;
 
 function Contacts() {
-  const filter = useSelector(getFilter);
-  const { data, isFetching } = useGetContactsQuery();
+  const filter = useSelector(contactsSelectors.getFilter);
+  const { data, isFetching } = contactsSlice.useGetContactsQuery();
+
   const filteredContacts = () => {
     const normalizeFilter = filter.toLowerCase();
     if (filter === '') {
@@ -24,10 +28,11 @@ function Contacts() {
     }
     return data.filter(el => el.name.toLowerCase().includes(normalizeFilter));
   };
+
   return data?.length === 0 ? (
     <h1>There is no contacts</h1>
   ) : (
-    <>
+    <Section>
       <h2>Contacts</h2>
       <Filter />
       <ul className={s.contact_list}>
@@ -39,7 +44,7 @@ function Contacts() {
           ))
         )}
       </ul>
-    </>
+    </Section>
   );
 }
 

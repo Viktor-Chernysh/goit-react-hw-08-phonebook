@@ -1,20 +1,21 @@
 import './App.css';
-import Section from './components/Section/Section';
+
 import Form from './components/Form';
 import Contacts from './components/Contacts/Contacts';
+import Navigation from 'components/Navigation/Navigation';
 
-function App() {
+export default function App() {
+  const isAuth = true;
   return (
     <>
-      <Section>
-        <h1>Phonebook</h1>
-        <Form />
-      </Section>
-      {/* {contacts.length > 0 && ( */}
-      <Section>
-        <Contacts />
-      </Section>
-      {/* )} */}
+      <Navigation />
+
+      {isAuth && (
+        <>
+          <Form />
+          <Contacts />
+        </>
+      )}
     </>
   );
 }
@@ -23,4 +24,3 @@ function App() {
 //   contacts: state.contacts.items,
 // });
 // export default connect(mapStateToProps, null)(App);
-export default App;

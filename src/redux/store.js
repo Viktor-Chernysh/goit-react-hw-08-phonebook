@@ -1,16 +1,20 @@
 import { configureStore, getDefaultMiddleware } from '@reduxjs/toolkit';
-import { filterReducer } from './contacts/counter-reducers';
+import { filterSlice, userAuthSlice } from './slices';
 import { setupListeners } from '@reduxjs/toolkit/dist/query';
 import { contactsApi } from './contacts/contactsSlice';
+import { userAuthApi } from './auth/userSlice';
 
 export const store = configureStore({
   reducer: {
     [contactsApi.reducerPath]: contactsApi.reducer,
-    filter: filterReducer,
+    [userAuthApi.reducerPath]: userAuthApi.reducer,
+    filter: filterSlice.reducer,
+    userAuth: userAuthSlice.reducer,
   },
   middleware: getDefaultMiddleware => [
     ...getDefaultMiddleware(),
     contactsApi.middleware,
+    userAuthApi.middleware,
   ],
 });
 
