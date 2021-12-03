@@ -9,7 +9,7 @@ export const userAuthApi = createApi({
       // console.log(getState());
       // console.log(headers);
       if (token) {
-        headers.set('Authorization', `Bearer ${token}`);
+        headers.set('authorization', `Bearer ${token}`);
         // console.log(headers);
       }
       return headers;
@@ -19,16 +19,16 @@ export const userAuthApi = createApi({
   endpoints: builder => ({
     getContacts: builder.query({
       query: () => `contacts`,
-      // providesTags: ['Contacts'],
-      providesTags: result =>
-        result
-          ? [
-              ...result.map(({ id }) => ({ type: 'Contacts', id })),
-              { type: 'Contacts', id: 'LIST' },
-            ]
-          : [{ type: 'Contacts', id: 'LIST' }],
+      providesTags: ['Contacts'],
+      // providesTags: result =>
+      //   result
+      //     ? [
+      //         ...result.map(({ id }) => ({ type: 'Contacts', id })),
+      //         { type: 'Contacts', id: 'LIST' },
+      //       ]
+      //     : [{ type: 'Contacts', id: 'LIST' }],
     }),
-    // invalidatesTags: ['Contacts'],
+    invalidatesTags: ['Contacts'],
     deleteContact: builder.mutation({
       query: id => ({
         url: `/contacts/${id}`,
@@ -47,7 +47,7 @@ export const userAuthApi = createApi({
     getUserInfo: builder.query({
       query: () => `/users/current`,
     }),
-    invalidatesTags: ['User'],
+    // invalidatesTags: ['User'],
     loginUser: builder.mutation({
       query: body => ({
         url: '/users/login',

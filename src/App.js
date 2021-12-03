@@ -1,22 +1,31 @@
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { Routes, Route } from 'react-router-dom';
+import { useEffect } from 'react';
 
 import './App.css';
 import Navigation from 'components/Navigation/AppBar';
-import { isLogin } from 'redux/auth/auth-selectors';
+import { isLogin, getToken } from 'redux/auth/auth-selectors';
 import PrivateRoute from 'routes/PrivateRoute';
 import PublicRoute from 'routes/PublicRoute';
 import Login from 'components/Login/Login';
 import Register from 'components/Register/Register';
 import Home from 'components/Home/Home';
+import { setUser } from 'redux/slices';
 
-// import { useGetUserQuery } from 'redux/auth/userSlice';
+import { useGetUserInfoQuery } from 'redux/auth/userSlice';
 
 export default function App() {
-  // const { getUser } = useGetUserQuery();
-  // console.log(getUser);
   const isAuth = useSelector(isLogin);
-  // console.log(isAuth);
+  const dispatch = useDispatch();
+  const token = useSelector(getToken);
+  const { data } = useGetUserInfoQuery('', {
+    skip: token === null || (token && isAuth),
+  });
+
+  useEffect(() => {
+    if (isAuth) return;
+    data && dispatch(setUser(data));
+  }, [data, dispatch, isAuth]);
   return (
     <>
       <Navigation />
