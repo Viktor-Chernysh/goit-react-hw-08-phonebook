@@ -61,7 +61,6 @@ export default function Login() {
 
   return (
     <>
-      <h2>Login</h2>
       <form className={s.form} onSubmit={handleSubmit}>
         <label className={s.label} htmlFor={emailInputId}>
           Enter you mail

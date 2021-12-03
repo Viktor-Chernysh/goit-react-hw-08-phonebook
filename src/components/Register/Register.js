@@ -69,7 +69,6 @@ export default function Register() {
 
   return (
     <>
-      <h2>Register</h2>
       <form className={s.form} onSubmit={handleSubmit}>
         <label className={s.label} htmlFor={nameInputId}>
           Enter you name
