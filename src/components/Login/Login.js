@@ -2,8 +2,11 @@ import { useState } from 'react';
 import ClockLoader from 'react-spinners/ClockLoader';
 import { css } from '@emotion/react';
 import shortid from 'shortid';
+import { useDispatch } from 'react-redux';
 
 import s from './Login.module.css';
+import { useLoginUserMutation } from 'redux/auth/userSlice';
+import { setUserData } from 'redux/slices';
 
 const override = css`
   display: block;
@@ -11,15 +14,28 @@ const override = css`
   border-color: white;
 `;
 
-const nameInputId = shortid();
+const emailInputId = shortid();
 const passwordInputId = shortid();
 
 export default function Login() {
-  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [loginUser, { isLoading }] = useLoginUserMutation();
+  const dispatch = useDispatch();
 
-  const handleSubmit = e => {
+  const handleSubmit = async e => {
     e.preventDefault();
+    const contactObject = {
+      email,
+      password,
+    };
+    try {
+      const response = await loginUser(contactObject);
+
+      dispatch(setUserData(response));
+    } catch (error) {
+      alert('mail or password is not right');
+    }
 
     resetForm();
   };
@@ -27,8 +43,8 @@ export default function Login() {
   function handleChange(e) {
     const { name, value } = e.target;
     switch (name) {
-      case 'name':
-        setName(value.trim());
+      case 'email':
+        setEmail(value.trim());
         break;
       case 'password':
         setPassword(value.trim());
@@ -39,7 +55,7 @@ export default function Login() {
   }
 
   function resetForm() {
-    setName('');
+    setEmail('');
     setPassword('');
   }
 
@@ -47,16 +63,16 @@ export default function Login() {
     <>
       <h2>Login</h2>
       <form className={s.form} onSubmit={handleSubmit}>
-        <label className={s.label} htmlFor={nameInputId}>
-          Enter you name
+        <label className={s.label} htmlFor={emailInputId}>
+          Enter you mail
           <input
             className={s.input}
-            id={nameInputId}
-            value={name}
-            type="text"
-            name="name"
-            pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
-            title="Имя может состоять только из букв, апострофа, тире и пробелов. Например Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan и т. п."
+            id={emailInputId}
+            value={email}
+            type="email"
+            name="email"
+            // pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
+            // title="Имя может состоять только из букв, апострофа, тире и пробелов. Например Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan и т. п."
             onChange={handleChange}
             required
           />
@@ -69,7 +85,7 @@ export default function Login() {
             value={password}
             type="password"
             name="password"
-            pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
+            // pattern="(?=.*\d)(?=.*[a-z]).{6,}"
             title="Должен содержать не менее одной цифры, одной прописной и строчной буквы и не менее 8  символов"
             onChange={handleChange}
             required
@@ -79,8 +95,8 @@ export default function Login() {
           Login
           <ClockLoader
             color="#ffffff"
-            // loading={isLoading}
-            loading={false}
+            loading={isLoading}
+            // loading={false}
             size={25}
             css={override}
           />

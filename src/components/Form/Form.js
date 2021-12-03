@@ -7,7 +7,7 @@ import s from './Form.module.css';
 import {
   useCreateContactMutation,
   useGetContactsQuery,
-} from '../../redux/contacts/contactsSlice';
+} from '../../redux/auth/userSlice';
 import Section from 'components/Section/Section';
 
 const override = css`
@@ -32,10 +32,10 @@ function Form() {
       number,
     };
     const addedName = data
-      .map(el => el.name.toLowerCase())
+      ?.map(el => el.name.toLowerCase())
       .includes(contactObject.name.toLowerCase());
     const addedNumber = data
-      .map(el => el.number)
+      ?.map(el => el.number)
       .includes(contactObject.number);
     if (addedName && addedNumber) {
       alert(`${contactObject.name} is already in contacts!`);

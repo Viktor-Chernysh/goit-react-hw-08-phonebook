@@ -1,4 +1,4 @@
-import { useDeleteContactMutation } from '../../redux/contacts/contactsSlice';
+import { useDeleteContactMutation } from '../../redux/auth/userSlice';
 import s from './Contacts.module.css';
 
 export default function ContactItem({ id, name, number }) {
