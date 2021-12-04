@@ -18,14 +18,13 @@ export default function App() {
   const isAuth = useSelector(isLogin);
   const dispatch = useDispatch();
   const token = useSelector(getToken);
-  const { data } = useGetUserInfoQuery('', {
-    skip: token === null || (token && isAuth),
+  const { data } = useGetUserInfoQuery(null, {
+    skip: token === null || isAuth,
   });
-
+  // console.log(data);
   useEffect(() => {
-    if (isAuth) return;
     data && dispatch(setUser(data));
-  }, [data, dispatch, isAuth]);
+  }, [data, dispatch]);
   return (
     <>
       <Navigation />

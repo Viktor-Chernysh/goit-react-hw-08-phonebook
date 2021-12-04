@@ -14,22 +14,6 @@ const override = css`
   border-color: white;
 `;
 
-// const s = {
-//   container: {
-//     display: 'flex',
-//     alignItems: 'center',
-//   },
-//   avatar: {
-//     marginRight: 4,
-//     width: '45px',
-//     // height: 'auto',
-//     borderRadius: '25px',
-//   },
-//   name: {
-//     fontWeight: 700,
-//     marginRight: 12,
-//   },
-// };
 export default function UserMenu() {
   const name = useSelector(getName);
   // const token = useSelector(getToken);
@@ -47,9 +31,6 @@ export default function UserMenu() {
         <img src={avatar} alt="" width="32" className={s.avatar} />
         <span className={s.name}>Welcome, {name}!</span>
       </div>
-      {/* <button type="button" onClick={handleLogOut}>
-        log out
-      </button> */}
       <button className={s.button} type="button" onClick={handleLogOut}>
         Log out
         <ClockLoader
