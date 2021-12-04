@@ -19,6 +19,14 @@ const persistConfig = {
   storage,
   whitelist: ['token'],
 };
+const middleware = getDefaultMiddleware => [
+  ...getDefaultMiddleware({
+    serializableCheck: {
+      ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
+    },
+  }),
+  userAuthApi.middleware,
+];
 
 export const store = configureStore({
   reducer: {
@@ -26,14 +34,7 @@ export const store = configureStore({
     filter: filterSlice.reducer,
     userAuth: persistReducer(persistConfig, userAuthSlice.reducer),
   },
-  middleware: getDefaultMiddleware => [
-    ...getDefaultMiddleware({
-      serializableCheck: {
-        ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
-      },
-    }),
-    userAuthApi.middleware,
-  ],
+  middleware,
 });
 
 setupListeners(store.dispatch);

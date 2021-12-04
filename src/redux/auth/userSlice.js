@@ -20,13 +20,6 @@ export const userAuthApi = createApi({
     getContacts: builder.query({
       query: () => `contacts`,
       providesTags: ['Contacts'],
-      // providesTags: result =>
-      //   result
-      //     ? [
-      //         ...result.map(({ id }) => ({ type: 'Contacts', id })),
-      //         { type: 'Contacts', id: 'LIST' },
-      //       ]
-      //     : [{ type: 'Contacts', id: 'LIST' }],
     }),
     invalidatesTags: ['Contacts'],
     deleteContact: builder.mutation({
@@ -46,8 +39,9 @@ export const userAuthApi = createApi({
     }),
     getUserInfo: builder.query({
       query: () => `/users/current`,
+      invalidatesTags: ['User'],
     }),
-    // invalidatesTags: ['User'],
+
     loginUser: builder.mutation({
       query: body => ({
         url: '/users/login',
@@ -68,6 +62,7 @@ export const userAuthApi = createApi({
         url: '/users/logout',
         method: 'POST',
       }),
+      invalidatesTags: ['Contacts'],
     }),
   }),
 });

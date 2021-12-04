@@ -21,8 +21,6 @@ const override = css`
 function Contacts() {
   const filter = useSelector(contactsSelectors.getFilter);
   const { data, isFetching } = useGetContactsQuery();
-  // const isAuth = useSelector(isLogin);
-  // console.log('render', data);
   const filteredContacts = () => {
     const normalizeFilter = filter.toLowerCase();
     if (filter === '') {
