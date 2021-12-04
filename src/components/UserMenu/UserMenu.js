@@ -1,31 +1,40 @@
 import { useSelector, useDispatch } from 'react-redux';
+import ClockLoader from 'react-spinners/ClockLoader';
+import { css } from '@emotion/react';
 
-import { getName, getToken } from 'redux/auth/auth-selectors';
+import { getName } from 'redux/auth/auth-selectors';
 import { useLogOutUserMutation } from 'redux/auth/userSlice';
 import { setLogout } from 'redux/slices';
 import defaultAvatar from './default-avatar.png';
 
-const s = {
-  container: {
-    display: 'flex',
-    alignItems: 'center',
-  },
-  avatar: {
-    marginRight: 4,
-    width: '45px',
-    // height: 'auto',
-    borderRadius: '25px',
-  },
-  name: {
-    fontWeight: 700,
-    marginRight: 12,
-  },
-};
+import s from './UserMenu.module.css';
+const override = css`
+  display: block;
+  margin: 0 auto;
+  border-color: white;
+`;
+
+// const s = {
+//   container: {
+//     display: 'flex',
+//     alignItems: 'center',
+//   },
+//   avatar: {
+//     marginRight: 4,
+//     width: '45px',
+//     // height: 'auto',
+//     borderRadius: '25px',
+//   },
+//   name: {
+//     fontWeight: 700,
+//     marginRight: 12,
+//   },
+// };
 export default function UserMenu() {
   const name = useSelector(getName);
   // const token = useSelector(getToken);
   const dispatch = useDispatch();
-  const [logOutUser] = useLogOutUserMutation();
+  const [logOutUser, { isLoading }] = useLogOutUserMutation();
   const avatar = defaultAvatar;
 
   const handleLogOut = () => {
@@ -33,11 +42,23 @@ export default function UserMenu() {
     dispatch(setLogout());
   };
   return (
-    <div style={s.container}>
-      <img src={avatar} alt="" width="32" style={s.avatar} />
-      <span style={s.name}>Welcome, {name}</span>
-      <button type="button" onClick={handleLogOut}>
+    <div className={s.container}>
+      <div className={s.user}>
+        <img src={avatar} alt="" width="32" className={s.avatar} />
+        <span className={s.name}>Welcome, {name}!</span>
+      </div>
+      {/* <button type="button" onClick={handleLogOut}>
         log out
+      </button> */}
+      <button className={s.button} type="button" onClick={handleLogOut}>
+        Log out
+        <ClockLoader
+          color="#ffffff"
+          loading={isLoading}
+          // loading={false}
+          size={25}
+          css={override}
+        />
       </button>
     </div>
   );

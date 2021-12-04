@@ -22,7 +22,7 @@ function Contacts() {
   const filter = useSelector(contactsSelectors.getFilter);
   const { data, isFetching } = useGetContactsQuery();
   // const isAuth = useSelector(isLogin);
-  console.log('render', data);
+  // console.log('render', data);
   const filteredContacts = () => {
     const normalizeFilter = filter.toLowerCase();
     if (filter === '') {
@@ -30,9 +30,7 @@ function Contacts() {
     }
     return data.filter(el => el.name.toLowerCase().includes(normalizeFilter));
   };
-  // useEffect(() => {
-  //   return data;
-  // }, []);
+
   return data?.length === 0 ? (
     <h1>There is no contacts</h1>
   ) : (

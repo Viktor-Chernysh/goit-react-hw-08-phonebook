@@ -2,16 +2,29 @@
   font-size: 24px;
   color: rgb(3, 3, 3);
   text-decoration: none;
+  padding: 10px;
 }
-
+.link:not(:last-child) {
+  margin-left: 15px;
+}
 .activeLink {
   font-size: 24px;
   color: rgb(255, 255, 255);
-
+  padding: 10px;
   text-decoration: none;
 }
-ul {
+/* nav {
   list-style: none;
   display: flex;
   font-weight: 700;
+  width: auto;
+  padding: 25px;
+  margin-bottom: 25px;
+} */
+nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 100%;
+  padding: 0 30px;
 }
