@@ -45,8 +45,3 @@ export default function App() {
     </>
   );
 }
-
-// const mapStateToProps = state => ({
-//   contacts: state.contacts.items,
-// });
-// export default connect(mapStateToProps, null)(App);

@@ -5,7 +5,7 @@ import shortid from 'shortid';
 import { useDispatch } from 'react-redux';
 
 import s from './Login.module.css';
-import { useLoginUserMutation } from 'redux/auth/userSlice';
+import { useLogInUserMutation } from 'redux/auth/userSlice';
 import { setUserData } from 'redux/slices';
 
 const override = css`
@@ -20,7 +20,7 @@ const passwordInputId = shortid();
 export default function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [loginUser, { isLoading }] = useLoginUserMutation();
+  const [loginUser, { isLoading }] = useLogInUserMutation();
   const dispatch = useDispatch();
 
   const handleSubmit = async e => {

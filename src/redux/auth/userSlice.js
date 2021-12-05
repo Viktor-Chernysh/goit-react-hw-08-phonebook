@@ -39,15 +39,15 @@ export const userAuthApi = createApi({
     }),
     getUserInfo: builder.query({
       query: () => `/users/current`,
-      invalidatesTags: ['User'],
+      // invalidatesTags: ['User'],
     }),
-
-    loginUser: builder.mutation({
+    logInUser: builder.mutation({
       query: body => ({
         url: '/users/login',
         method: 'POST',
         body,
       }),
+      invalidatesTags: ['Contacts'],
     }),
     createUser: builder.mutation({
       query: body => ({
@@ -62,7 +62,6 @@ export const userAuthApi = createApi({
         url: '/users/logout',
         method: 'POST',
       }),
-      invalidatesTags: ['Contacts'],
     }),
   }),
 });
@@ -72,7 +71,7 @@ export const {
   useCreateContactMutation,
   useDeleteContactMutation,
   useLogOutUserMutation,
-  useLoginUserMutation,
+  useLogInUserMutation,
   useGetUserInfoQuery,
   useCreateUserMutation,
 } = userAuthApi;
